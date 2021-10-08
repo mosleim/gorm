@@ -74,7 +74,6 @@ func (cs *callbacks) Raw() *processor {
 
 func (p *processor) Execute(db *DB) *DB {
 
-
 	var (
 		curTime           = time.Now()
 		stmt              = db.Statement
@@ -103,6 +102,7 @@ func (p *processor) Execute(db *DB) *DB {
 			}
 		}
 	}
+	//  moving this one
 	// call scopes
 	for len(db.Statement.scopes) > 0 {
 		scopes := db.Statement.scopes
