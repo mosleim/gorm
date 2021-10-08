@@ -73,14 +73,7 @@ func (cs *callbacks) Raw() *processor {
 }
 
 func (p *processor) Execute(db *DB) *DB {
-	// call scopes
-	for len(db.Statement.scopes) > 0 {
-		scopes := db.Statement.scopes
-		db.Statement.scopes = nil
-		for _, scope := range scopes {
-			db = scope(db)
-		}
-	}
+
 
 	var (
 		curTime           = time.Now()
@@ -110,7 +103,14 @@ func (p *processor) Execute(db *DB) *DB {
 			}
 		}
 	}
-
+	// call scopes
+	for len(db.Statement.scopes) > 0 {
+		scopes := db.Statement.scopes
+		db.Statement.scopes = nil
+		for _, scope := range scopes {
+			db = scope(db)
+		}
+	}
 	// assign stmt.ReflectValue
 	if stmt.Dest != nil {
 		stmt.ReflectValue = reflect.ValueOf(stmt.Dest)
